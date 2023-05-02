@@ -1,7 +1,4 @@
 <?php
-require __DIR__ . '/../../../../src/config/database.php';
-require __DIR__ . '/../../../../src/libs/xssClean.php';
-require __DIR__ . '/../../../../src/libs/hashString.php';
 
 class UserModel
 {
@@ -123,13 +120,13 @@ class UserModel
             }
         } catch (PDOException $e) {
             $result["data"] = null;
-            $result["error"] = $e->getMessage();
+            $result["error"] = $e->errorInfo[count($e->errorInfo) - 1];
         }
 
         return $result;
     }
 
-    public function getUserIdByName()
+    public function getUser()
     {
         $db = new Database();
         $conn = null;
@@ -138,7 +135,16 @@ class UserModel
         try {
             $conn = $db->connect();
 
-            $sqlQuery = "SELECT * FROM $this->db_table WHERE USERNAME = ':USERNAME'";
+            $sqlQuery = "SELECT USER_ID,
+                                USERNAME, 
+                                EMAIL, 
+                                CREATED_DATETIME,
+                                BANNED_DATETIME,
+                                LAST_ONLINE_DATETIME,
+                                IS_ONLINE,
+                                IS_BANNED,
+                                STATUS  
+                         FROM $this->db_table WHERE USER_ID = :USER_ID";
             $stmt = $conn->prepare($sqlQuery);
             $this->sanitizeParams();
             $this->bindParams($stmt);
@@ -163,7 +169,16 @@ class UserModel
         try {
             $conn = $db->connect();
 
-            $sqlQuery = "SELECT * FROM $this->db_table";
+            $sqlQuery = "SELECT USER_ID,
+                                USERNAME, 
+                                EMAIL, 
+                                CREATED_DATETIME,
+                                BANNED_DATETIME,
+                                LAST_ONLINE_DATETIME,
+                                IS_ONLINE,
+                                IS_BANNED,
+                                STATUS  
+                        FROM $this->db_table";
             $stmt = $conn->prepare($sqlQuery);
             $stmt->execute();
 

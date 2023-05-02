@@ -1,6 +1,4 @@
 <?php
-require __DIR__ . '/../models/chat_group.php';
-
 class ChatGroupController
 {
     public function getUsers()
@@ -19,8 +17,8 @@ class ChatGroupController
                 $result["item_count"] = $stmt->rowCount();
                 $result["error"] = null;
                 $result["http_code"] = 200;
-                
-                if($result["item_count"] > 0) {
+
+                if ($result["item_count"] > 0) {
                     $result["body"] = $stmt->fetchAll(PDO::FETCH_OBJ);
                 } else {
                     $result["body"] = array();
@@ -46,11 +44,10 @@ class ChatGroupController
             $result["http_code"] = 500;
         } else {
             if (isset($model_response["data"])) {
-                $stmt = $model_response["data"];
                 $result["error"] = null;
                 $result["http_code"] = 200;
-                
-                if($model_response["data"] > 0) {
+
+                if ($model_response["data"] > 0) {
                     $result["body"] = $model_response["data"];
                 } else {
                     $result["body"] = -1;

@@ -1,8 +1,4 @@
 <?php
-require __DIR__ . '/../../../../src/config/database.php';
-require __DIR__ . '/../../../../src/libs/xssClean.php';
-require __DIR__ . '/../../../../src/libs/hashString.php';
-
 class ChatGroupModel
 {
     private $db_table;
@@ -75,7 +71,7 @@ class ChatGroupModel
             }
         } catch (PDOException $e) {
             $result["data"] = null;
-            $result["error"] = $e->getMessage();
+            $result["error"] = $e->errorInfo[count($e->errorInfo) - 1];
         }
 
         return $result;

@@ -1,6 +1,4 @@
 <?php
-require __DIR__ . '/../models/user.php';
-
 class UserController
 {
     public function getUsers()
@@ -24,16 +22,19 @@ class UserController
                     $result["body"] = $stmt->fetchAll(PDO::FETCH_OBJ);
                 } else {
                     $result["body"] = array();
+                    $result["error"] = "Error! Not Found";
+                    $result["http_code"] = 404;
                 }
             }
         }
 
         return $result;
     }
-    public function getUser($params)
+    public function getUser($param_user_id)
     {
         $user_model = new UserModel();
-        $model_response = $user_model->getUsers();
+        $user_model->user_id = $param_user_id;
+        $model_response = $user_model->getUser();
         $result = array();
 
         if (isset($model_response["error"])) {
@@ -48,9 +49,11 @@ class UserController
                 $result["http_code"] = 200;
                 
                 if($result["item_count"] > 0) {
-                    $result["body"] = $stmt->fetchAll(PDO::FETCH_OBJ);
+                    $result["body"] = $stmt->fetch(PDO::FETCH_OBJ);
                 } else {
                     $result["body"] = array();
+                    $result["error"] = "Error! Not Found";
+                    $result["http_code"] = 404;
                 }
             }
         }
@@ -74,7 +77,6 @@ class UserController
             $result["http_code"] = 500;
         } else {
             if (isset($model_response["data"])) {
-                $stmt = $model_response["data"];
                 $result["error"] = null;
                 $result["http_code"] = 200;
                 
