@@ -13,13 +13,13 @@ class UserController
             $result["http_code"] = 500;
         } else {
             if (isset($model_response["data"])) {
-                $stmt = $model_response["data"];
-                $result["item_count"] = $stmt->rowCount();
+                $data = $model_response["data"];
+                $result["item_count"] = $data["count"];
                 $result["error"] = null;
                 $result["http_code"] = 200;
                 
                 if($result["item_count"] > 0) {
-                    $result["body"] = $stmt->fetchAll(PDO::FETCH_OBJ);
+                    $result["body"] = $data["data"];
                 } else {
                     $result["body"] = array();
                     $result["error"] = "Error! Not Found";
@@ -43,13 +43,13 @@ class UserController
             $result["http_code"] = 500;
         } else {
             if (isset($model_response["data"])) {
-                $stmt = $model_response["data"];
-                $result["item_count"] = $stmt->rowCount();
+                $data = $model_response["data"];
+                $result["item_count"] = $data["count"];
                 $result["error"] = null;
                 $result["http_code"] = 200;
                 
                 if($result["item_count"] > 0) {
-                    $result["body"] = $stmt->fetch(PDO::FETCH_OBJ);
+                    $result["body"] = $data["data"];
                 } else {
                     $result["body"] = array();
                     $result["error"] = "Error! Not Found";

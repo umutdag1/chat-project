@@ -1,34 +1,6 @@
 <?php
 class ChatGroupController
 {
-    public function getUsers()
-    {
-        $user_model = new UserModel();
-        $model_response = $user_model->getUsers();
-        $result = array();
-
-        if (isset($model_response["error"])) {
-            $result["body"] = null;
-            $result["error"] = $model_response["error"];
-            $result["http_code"] = 500;
-        } else {
-            if (isset($model_response["data"])) {
-                $stmt = $model_response["data"];
-                $result["item_count"] = $stmt->rowCount();
-                $result["error"] = null;
-                $result["http_code"] = 200;
-
-                if ($result["item_count"] > 0) {
-                    $result["body"] = $stmt->fetchAll(PDO::FETCH_OBJ);
-                } else {
-                    $result["body"] = array();
-                }
-            }
-        }
-
-        return $result;
-    }
-
     public function addChatGroup($params)
     {
         $chat_group_model = new ChatGroupModel();

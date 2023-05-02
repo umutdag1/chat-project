@@ -150,7 +150,8 @@ class UserModel
             $this->bindParams($stmt);
             $stmt->execute();
 
-            $result["data"] = $stmt;
+            $result["data"] = $stmt->fetch(PDO::FETCH_OBJ);
+            $result["count"] = $stmt->rowCount();
             $result["error"] = null;
         } catch (PDOException $e) {
             $result["data"] = null;
@@ -182,7 +183,8 @@ class UserModel
             $stmt = $conn->prepare($sqlQuery);
             $stmt->execute();
 
-            $result["data"] = $stmt;
+            $result["data"] = $stmt->fetchAll(PDO::FETCH_OBJ);
+            $result["count"] = $stmt->rowCount();
             $result["error"] = null;
         } catch (PDOException $e) {
             $result["data"] = null;
