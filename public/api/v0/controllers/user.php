@@ -13,7 +13,7 @@ class UserController
             $result["http_code"] = 500;
         } else {
             if (isset($model_response["data"])) {
-                $data = $model_response["data"];
+                $data = $model_response;
                 $result["item_count"] = $data["count"];
                 $result["error"] = null;
                 $result["http_code"] = 200;
@@ -43,7 +43,7 @@ class UserController
             $result["http_code"] = 500;
         } else {
             if (isset($model_response["data"])) {
-                $data = $model_response["data"];
+                $data = $model_response;
                 $result["item_count"] = $data["count"];
                 $result["error"] = null;
                 $result["http_code"] = 200;
