@@ -120,7 +120,7 @@ class UserModel
             }
         } catch (PDOException $e) {
             $result["data"] = null;
-            $result["error"] = $e->errorInfo[count($e->errorInfo) - 1];
+            $result["error"] = $e->getMessage();
         }
 
         return $result;
@@ -158,7 +158,7 @@ class UserModel
             
         } catch (PDOException $e) {
             $result["data"] = null;
-            $result["error"] = $e->errorInfo[count($e->errorInfo) - 1];
+            $result["error"] = $e->getMessage();
         }
 
         return $result;
@@ -196,7 +196,7 @@ class UserModel
             $result["error"] = null;
         } catch (PDOException $e) {
             $result["data"] = null;
-            $result["error"] = $e->errorInfo[count($e->errorInfo) - 1];
+            $result["error"] = $e->getMessage();
         }
 
         return $result;
@@ -229,7 +229,7 @@ class UserModel
             $result["error"] = null;
         } catch (PDOException $e) {
             $result["data"] = null;
-            $result["error"] = $e->errorInfo[count($e->errorInfo) - 1];
+            $result["error"] = $e->getMessage();
         }
 
         return $result;

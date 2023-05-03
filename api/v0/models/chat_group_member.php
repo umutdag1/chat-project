@@ -82,8 +82,8 @@ class ChatGroupMemberModel
                 :CHAT_GROUP_ID,
                 :USER_ID,
                 '$current_date',
-                0,
-                0
+                :IS_BLOCKED,
+                :IS_ADMIN
             )";
             $stmt = $conn->prepare($sqlQuery);
             $this->sanitizeParams();
@@ -98,7 +98,7 @@ class ChatGroupMemberModel
             }
         } catch (PDOException $e) {
             $result["data"] = null;
-            $result["error"] = $e->errorInfo[count($e->errorInfo) - 1];
+            $result["error"] = $e->getMessage();
         }
 
         return $result;
@@ -131,7 +131,7 @@ class ChatGroupMemberModel
             $result["error"] = null;
         } catch (PDOException $e) {
             $result["data"] = null;
-            $result["error"] = $e->errorInfo[count($e->errorInfo) - 1];
+            $result["error"] = $e->getMessage();
         }
 
         return $result;
@@ -163,7 +163,7 @@ class ChatGroupMemberModel
             $result["error"] = null;
         } catch (PDOException $e) {
             $result["data"] = null;
-            $result["error"] = $e->errorInfo[count($e->errorInfo) - 1];
+            $result["error"] = $e->getMessage();
         }
 
         return $result;

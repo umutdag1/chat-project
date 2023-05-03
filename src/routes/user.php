@@ -30,6 +30,7 @@ $app->post('/users/add', function (Request $request, Response $response) {
 
 })->addMiddleware(new JsonBodyParserMiddleware());
 
+
 $app->patch('/users/online/{user_id}', function (Request $request, Response $response) {
     $user_id = $request->getAttribute("user_id");
     $params = (array) $request->getParsedBody();
@@ -46,4 +47,3 @@ $app->patch('/users/online/{user_id}', function (Request $request, Response $res
         ->withHeader("Content-Type", "application/json");
 
 })->addMiddleware(new JsonBodyParserMiddleware());
-

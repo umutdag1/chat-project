@@ -76,7 +76,7 @@ class MessageModel
             }
         } catch (PDOException $e) {
             $result["data"] = null;
-            $result["error"] = $e->errorInfo[count($e->errorInfo) - 1];
+            $result["error"] = $e->getMessage();
         }
 
         return $result;
@@ -107,7 +107,7 @@ class MessageModel
             $result["error"] = null;
         } catch (PDOException $e) {
             $result["data"] = null;
-            $result["error"] = $e->errorInfo[count($e->errorInfo) - 1];
+            $result["error"] = $e->getMessage();
         }
 
         return $result;

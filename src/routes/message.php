@@ -57,4 +57,4 @@ $app->get('/messages/{chat_group_id}/user/{user_id}', function (Request $request
         ->withStatus($response_body["http_code"])
         ->withHeader("Content-Type", "application/json");
 
-})->addMiddleware(new JsonBodyParserMiddleware());
+});

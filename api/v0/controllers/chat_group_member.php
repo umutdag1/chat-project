@@ -68,6 +68,8 @@ class ChatGroupMemberController
         $chat_gmember_model = new ChatGroupMemberModel();
         $chat_gmember_model->chat_group_id = $params["chat_group_id"];
         $chat_gmember_model->user_id = $params["user_id"];
+        $chat_gmember_model->is_blocked = $params["is_blocked"];
+        $chat_gmember_model->is_admin = $params["is_admin"];
 
         $model_response = $chat_gmember_model->addGroupMember();
         $result = array();
