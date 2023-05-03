@@ -82,41 +82,6 @@ class MessageModel
         return $result;
     }
 
-    public function getUser()
-    {
-        $db = new Database();
-        $conn = null;
-        $result = array();
-
-        try {
-            $conn = $db->connect();
-
-            $sqlQuery = "SELECT USER_ID,
-                                USERNAME, 
-                                EMAIL, 
-                                CREATED_DATETIME,
-                                BANNED_DATETIME,
-                                LAST_ONLINE_DATETIME,
-                                IS_ONLINE,
-                                IS_BANNED,
-                                STATUS  
-                         FROM $this->db_table WHERE USER_ID = :USER_ID";
-            $stmt = $conn->prepare($sqlQuery);
-            $this->sanitizeParams();
-            $this->bindParams($stmt);
-            $stmt->execute();
-
-            $result["data"] = $stmt->fetch(PDO::FETCH_OBJ);
-            $result["count"] = $stmt->rowCount();
-            $result["error"] = null;
-        } catch (PDOException $e) {
-            $result["data"] = null;
-            $result["error"] = $e->errorInfo[count($e->errorInfo) - 1];
-        }
-
-        return $result;
-    }
-
     public function getMessagesByGroupId()
     {
         $db = new Database();

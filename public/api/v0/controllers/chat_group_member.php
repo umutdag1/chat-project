@@ -1,35 +1,6 @@
 <?php
 class ChatGroupMemberController
 {
-    public function getUsers()
-    {
-        $user_model = new UserModel();
-        $model_response = $user_model->getUsers();
-        $result = array();
-
-        if (isset($model_response["error"])) {
-            $result["body"] = null;
-            $result["error"] = $model_response["error"];
-            $result["http_code"] = 500;
-        } else {
-            if (isset($model_response["data"])) {
-                $data = $model_response;
-                $result["item_count"] = $data["count"];
-                $result["error"] = null;
-                $result["http_code"] = 200;
-                
-                if($result["item_count"] > 0) {
-                    $result["body"] = $data["data"];
-                } else {
-                    $result["body"] = array();
-                    $result["error"] = "Error! Not Found";
-                    $result["http_code"] = 404;
-                }
-            }
-        }
-
-        return $result;
-    }
     public function getGroupMemberByUserId($param_user_id, $param_chat_group_id)
     {
         $chat_gmember_model = new ChatGroupMemberModel();

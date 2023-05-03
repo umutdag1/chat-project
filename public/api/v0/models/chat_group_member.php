@@ -168,37 +168,4 @@ class ChatGroupMemberModel
 
         return $result;
     }
-
-    public function getUsers()
-    {
-        $db = new Database();
-        $conn = null;
-        $result = array();
-
-        try {
-            $conn = $db->connect();
-
-            $sqlQuery = "SELECT USER_ID,
-                                USERNAME, 
-                                EMAIL, 
-                                CREATED_DATETIME,
-                                BANNED_DATETIME,
-                                LAST_ONLINE_DATETIME,
-                                IS_ONLINE,
-                                IS_BANNED,
-                                STATUS  
-                        FROM $this->db_table";
-            $stmt = $conn->prepare($sqlQuery);
-            $stmt->execute();
-
-            $result["data"] = $stmt->fetchAll(PDO::FETCH_OBJ);
-            $result["count"] = $stmt->rowCount();
-            $result["error"] = null;
-        } catch (PDOException $e) {
-            $result["data"] = null;
-            $result["error"] = $e->errorInfo[count($e->errorInfo) - 1];
-        }
-
-        return $result;
-    }
 }

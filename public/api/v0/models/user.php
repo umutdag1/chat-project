@@ -135,17 +135,6 @@ class UserModel
         try {
             $conn = $db->connect();
 
-            // echo $this->banned_datetime . "<br>";
-            // echo $this->last_online_datetime  . "<br>";
-            // echo $this->is_online  . "<br>";
-            // echo $this->is_banned  . "<br>";
-            // echo $this->status  . "<br>";
-            // echo $this->created_datetime  . "<br>";
-            // echo $this->password . "<br>";
-            // echo $this->email . "<br>";
-            // echo $this->username  . "<br>";
-            // echo $this->user_id;
-
             $sqlQuery = "UPDATE " . $this->db_table .
                 " SET BANNED_DATETIME = :BANNED_DATETIME,
                  LAST_ONLINE_DATETIME = :LAST_ONLINE_DATETIME,
