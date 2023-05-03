@@ -43,6 +43,37 @@ class ChatGroupModel
             $_stmt->bindParam(":STATUS", $this->status);
         }
     }
+
+    public function getChatGroup()
+    {
+        $db = new Database();
+        $conn = null;
+        $result = array();
+
+        try {
+            $conn = $db->connect();
+
+            $sqlQuery = "SELECT CHAT_GROUP_ID,
+                                NAME, 
+                                CREATED_BY,
+                                STATUS  
+                         FROM $this->db_table WHERE CHAT_GROUP_ID = :CHAT_GROUP_ID";
+            $stmt = $conn->prepare($sqlQuery);
+            $this->sanitizeParams();
+            $this->bindParams($stmt);
+            $stmt->execute();
+
+            $result["data"] = $stmt->fetch(PDO::FETCH_OBJ);
+            $result["count"] = $stmt->rowCount();
+            $result["error"] = null;
+        } catch (PDOException $e) {
+            $result["data"] = null;
+            $result["error"] = $e->errorInfo[count($e->errorInfo) - 1];
+        }
+
+        return $result;
+    }
+
     public function addChatGroup()
     {
         $db = new Database();

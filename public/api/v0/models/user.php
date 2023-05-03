@@ -126,6 +126,55 @@ class UserModel
         return $result;
     }
 
+    public function updateUserAvailability()
+    {
+        $db = new Database();
+        $conn = null;
+        $result = array();
+
+        try {
+            $conn = $db->connect();
+
+            // echo $this->banned_datetime . "<br>";
+            // echo $this->last_online_datetime  . "<br>";
+            // echo $this->is_online  . "<br>";
+            // echo $this->is_banned  . "<br>";
+            // echo $this->status  . "<br>";
+            // echo $this->created_datetime  . "<br>";
+            // echo $this->password . "<br>";
+            // echo $this->email . "<br>";
+            // echo $this->username  . "<br>";
+            // echo $this->user_id;
+
+            $sqlQuery = "UPDATE " . $this->db_table .
+                " SET BANNED_DATETIME = :BANNED_DATETIME,
+                 LAST_ONLINE_DATETIME = :LAST_ONLINE_DATETIME,
+                 IS_ONLINE = :IS_ONLINE,
+                 IS_BANNED = :IS_BANNED,
+                 STATUS = :STATUS
+                 WHERE USER_ID = :USER_ID";
+
+            $stmt = $conn->prepare($sqlQuery);
+            $this->sanitizeParams();
+            $this->bindParams($stmt);
+
+            $result["data"] = -1;
+            $result["error"] = "Error! Creation Failed";
+
+            if ($stmt->execute()) {
+                $result["data"] = 1;
+                $result["error"] = null;
+            }
+
+            
+        } catch (PDOException $e) {
+            $result["data"] = null;
+            $result["error"] = $e->errorInfo[count($e->errorInfo) - 1];
+        }
+
+        return $result;
+    }
+
     public function getUser()
     {
         $db = new Database();
@@ -144,7 +193,10 @@ class UserModel
                                 IS_ONLINE,
                                 IS_BANNED,
                                 STATUS  
-                         FROM $this->db_table WHERE USER_ID = :USER_ID";
+                         FROM $this->db_table WHERE USER_ID = :USER_ID AND 
+                                                    IS_ONLINE = :IS_ONLINE AND
+                                                    IS_BANNED = :IS_BANNED AND
+                                                    STATUS = :STATUS";
             $stmt = $conn->prepare($sqlQuery);
             $this->sanitizeParams();
             $this->bindParams($stmt);
